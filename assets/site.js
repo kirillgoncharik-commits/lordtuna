@@ -98,13 +98,26 @@
       button.disabled = true;
 
       try {
+        const formData = new FormData(form);
+        if (formData.get('_honey')) {
+          form.reset();
+          status.textContent = status.dataset.success || 'Tuna called. A human will reply. His Lordship has been informed.';
+          return;
+        }
+
+        const payload = Object.fromEntries(formData.entries());
         const response = await fetch(form.action, {
           method: 'POST',
-          body: new FormData(form),
-          headers: { 'Accept': 'application/json' }
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+          body: JSON.stringify(payload)
         });
         const data = await response.json().catch(() => ({}));
-        if (!response.ok) throw new Error(data.error || 'Request failed');
+        if (!response.ok || data.success === 'false' || data.success === false) {
+          throw new Error(data.message || data.error || 'Request failed');
+        }
 
         form.reset();
         status.textContent = status.dataset.success || 'Tuna called. A human will reply. His Lordship has been informed.';
