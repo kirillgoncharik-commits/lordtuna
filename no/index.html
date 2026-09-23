@@ -90,11 +90,14 @@
 
 <section class="screen call" id="call">
   <div class="call-copy"><div class="eyebrow">CALL TUNA</div><h2>Har du en bedrift.<br>Trenger du en side?</h2><p>En rotete idé er nok til å starte.</p><div class="direct"><a href="mailto:kirill.goncharik@gmail.com" data-analytics="email_click">kirill.goncharik@gmail.com ↗</a><a href="https://t.me/thelordtuna" target="_blank" rel="noopener" data-analytics="telegram_click">@thelordtuna ↗</a></div></div>
-  <form id="contact-form" class="contact-form" action="/api/contact" method="post">
+  <form id="contact-form" class="contact-form" action="https://formsubmit.co/ajax/kirill.goncharik@gmail.com" method="post">
     <label>Navn<input name="name" autocomplete="name" required></label>
     <label>E-post / Telegram<input name="contact" autocomplete="email" required></label>
     <label>Hva bygger du?<textarea name="message" rows="4" required></textarea></label>
-    <input class="hp" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
+    <input type="hidden" name="_subject" value="New Lord Tuna enquiry">
+    <input type="hidden" name="_template" value="table">
+    <input type="hidden" name="_url" value="https://lordtuna.com/">
+    <input class="hp" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true">
     <button type="submit">Call Tuna →</button><p id="form-status" role="status" data-success="Tuna called. Et menneske svarer. Hans Lordship er informert."></p>
   </form>
   <footer>
