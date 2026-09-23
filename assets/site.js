@@ -30,7 +30,7 @@
       if (!response.ok) throw new Error(data.error || 'Request failed');
 
       form.reset();
-      status.textContent = 'Tuna called. A human will reply. His Lordship has been informed.';
+      status.textContent = status.dataset.success || 'Tuna called. A human will reply. His Lordship has been informed.';
       if (typeof window.gtag === 'function') {
         window.gtag('event', 'call_tuna_submit', { page_path: location.pathname });
       }
