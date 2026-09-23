@@ -35,6 +35,7 @@ The homepage must stay within roughly **5–6 screens** on desktop.
 - English
 - Русский
 - Norsk
+- Dansk
 - Español
 - 日本語
 - Tok Pisin
