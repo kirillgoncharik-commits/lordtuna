@@ -4,6 +4,18 @@
       if (typeof window.gtag === 'function') {
         window.gtag('event', el.dataset.analytics, {
           link_url: el.href,
+          project: el.dataset.project || undefined,
+          page_path: location.pathname
+        });
+      }
+    });
+  });
+
+  document.querySelectorAll('.lang-menu a').forEach((el) => {
+    el.addEventListener('click', () => {
+      if (typeof window.gtag === 'function') {
+        window.gtag('event', 'language_switch', {
+          destination: el.getAttribute('href'),
           page_path: location.pathname
         });
       }
