@@ -6,6 +6,49 @@
     return window.lordTunaAnalyticsEnabled === true;
   }
 
+  function setupHeroTuna() {
+    const tuna = document.querySelector('[data-hero-tuna]');
+    if (!tuna) return;
+
+    const minimumVisibleMs = 2000;
+    const scrollThresholdPx = 24;
+    const startedAt = performance.now();
+    let lastScrollY = window.scrollY;
+    let totalScrollDistance = 0;
+    let dismissalScheduled = false;
+    let dismissed = false;
+
+    function dismiss() {
+      if (dismissed) return;
+      dismissed = true;
+      tuna.classList.add('is-leaving');
+      window.removeEventListener('scroll', onScroll);
+      window.setTimeout(() => tuna.classList.add('is-hidden'), 420);
+    }
+
+    function scheduleDismissal() {
+      if (dismissalScheduled || dismissed) return;
+      dismissalScheduled = true;
+      const remaining = minimumVisibleMs - (performance.now() - startedAt);
+      if (remaining <= 0) {
+        dismiss();
+      } else {
+        window.setTimeout(dismiss, remaining);
+      }
+    }
+
+    function onScroll() {
+      const currentScrollY = window.scrollY;
+      totalScrollDistance += Math.abs(currentScrollY - lastScrollY);
+      lastScrollY = currentScrollY;
+      if (totalScrollDistance < scrollThresholdPx) return;
+      window.removeEventListener('scroll', onScroll);
+      scheduleDismissal();
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+  }
+
   function loadAnalytics() {
     if (!/^G-[A-Z0-9]+$/i.test(GA_ID) || analyticsEnabled()) return;
 
@@ -132,5 +175,6 @@
     });
   }
 
+  setupHeroTuna();
   createConsentBanner();
 })();
