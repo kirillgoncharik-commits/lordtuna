@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 520" role="img" aria-labelledby="t d">
+<title id="t">Lord Tuna</title><desc id="d">Vintage scientific-style tuna engraving</desc>
+<defs>
+  <pattern id="h1" width="9" height="9" patternUnits="userSpaceOnUse" patternTransform="rotate(22)">
+    <line x1="0" y1="0" x2="0" y2="9" stroke="#161616" stroke-width="1" opacity=".34"/>
+  </pattern>
+  <pattern id="h2" width="11" height="11" patternUnits="userSpaceOnUse" patternTransform="rotate(-28)">
+    <line x1="0" y1="0" x2="0" y2="11" stroke="#161616" stroke-width=".9" opacity=".2"/>
+  </pattern>
+</defs>
+<g fill="none" stroke="#161616" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M87 282 C190 183 370 135 607 145 C803 153 930 201 1015 252
+           C1057 246 1096 221 1148 176 C1130 231 1128 268 1154 326
+           C1102 287 1062 272 1016 270
+           C911 337 768 374 586 381 C367 390 194 354 87 295
+           C73 290 73 286 87 282 Z"
+        fill="#F2EEE6" stroke-width="4"/>
+  <path d="M128 271 C240 199 406 168 608 175 C791 181 908 215 996 256"
+        stroke-width="2.2" opacity=".7"/>
+  <path d="M134 306 C278 345 449 355 604 348 C771 341 904 311 1003 270"
+        stroke-width="1.8" opacity=".45"/>
+  <path d="M433 155 C452 92 486 65 519 47 C507 91 508 121 526 151"
+        stroke-width="4" fill="#F2EEE6"/>
+  <path d="M649 160 C672 102 703 85 733 74 C720 111 718 136 733 165"
+        stroke-width="4" fill="#F2EEE6"/>
+  <path d="M424 365 C444 418 473 441 501 452 C488 411 490 386 507 370"
+        stroke-width="4" fill="#F2EEE6"/>
+  <path d="M704 357 C724 403 753 424 785 435 C768 397 766 374 779 348"
+        stroke-width="4" fill="#F2EEE6"/>
+  <path d="M1009 253 C1058 228 1093 207 1148 176" stroke-width="2.5"/>
+  <path d="M1014 270 C1057 282 1098 303 1154 326" stroke-width="2.5"/>
+  <path d="M333 258 C386 233 437 229 489 245 C457 270 409 282 351 278 Z"
+        fill="#F2EEE6" stroke-width="3"/>
+  <path d="M160 253 C205 223 259 211 319 218 C294 246 287 278 306 313
+           C248 319 198 305 154 282" stroke-width="3"/>
+  <path d="M302 221 C278 241 271 280 304 311" stroke-width="2" opacity=".65"/>
+  <circle cx="190" cy="260" r="21" fill="#F2EEE6" stroke-width="3"/>
+  <circle cx="190" cy="260" r="8" fill="#161616" stroke-width="1"/>
+  <path d="M85 282 C103 271 124 266 148 267" stroke-width="3"/>
+  <path d="M84 294 C105 299 128 300 150 294" stroke-width="2"/>
+  <path d="M994 250 C1007 256 1014 263 1016 270" stroke-width="2"/>
+  <g stroke-width="1.4" opacity=".65">
+    <path d="M164 235 C189 247 214 250 242 249"/>
+    <path d="M156 244 C184 256 214 260 246 258"/>
+    <path d="M153 274 C184 282 214 284 247 281"/>
+    <path d="M162 290 C190 295 216 295 244 290"/>
+    <path d="M360 251 C397 254 430 255 466 252"/>
+    <path d="M359 260 C396 263 430 263 465 259"/>
+    <path d="M357 269 C397 271 428 269 458 265"/>
+  </g>
+</g>
+<path d="M311 219 C500 165 770 172 996 256 C845 257 704 251 565 242 C468 236 385 228 311 219 Z"
+      fill="url(#h1)" opacity=".9"/>
+<path d="M301 313 C462 354 749 347 1004 270 C819 292 641 303 479 304 C413 305 354 307 301 313 Z"
+      fill="url(#h2)" opacity=".8"/>
+<g fill="none" stroke="#161616" stroke-width="1.3" opacity=".42">
+  <path d="M546 149 l-12 -12 M572 147 l-10 -13 M597 148 l-8 -13 M622 150 l-6 -13"/>
+  <path d="M777 169 l-7 -12 M798 174 l-6 -11 M819 179 l-5 -10 M840 185 l-4 -10"/>
+  <path d="M850 334 l5 11 M872 328 l6 11 M894 320 l7 10 M916 311 l8 9"/>
+</g>
+</svg>
