@@ -6,49 +6,6 @@
     return window.lordTunaAnalyticsEnabled === true;
   }
 
-  function setupHeroTuna() {
-    const tuna = document.querySelector('[data-hero-tuna]');
-    if (!tuna) return;
-
-    const minimumVisibleMs = 2000;
-    const scrollThresholdPx = 24;
-    const startedAt = performance.now();
-    let lastScrollY = window.scrollY;
-    let totalScrollDistance = 0;
-    let dismissalScheduled = false;
-    let dismissed = false;
-
-    function dismiss() {
-      if (dismissed) return;
-      dismissed = true;
-      tuna.classList.add('is-leaving');
-      window.removeEventListener('scroll', onScroll);
-      window.setTimeout(() => tuna.classList.add('is-hidden'), 420);
-    }
-
-    function scheduleDismissal() {
-      if (dismissalScheduled || dismissed) return;
-      dismissalScheduled = true;
-      const remaining = minimumVisibleMs - (performance.now() - startedAt);
-      if (remaining <= 0) {
-        dismiss();
-      } else {
-        window.setTimeout(dismiss, remaining);
-      }
-    }
-
-    function onScroll() {
-      const currentScrollY = window.scrollY;
-      totalScrollDistance += Math.abs(currentScrollY - lastScrollY);
-      lastScrollY = currentScrollY;
-      if (totalScrollDistance < scrollThresholdPx) return;
-      window.removeEventListener('scroll', onScroll);
-      scheduleDismissal();
-    }
-
-    window.addEventListener('scroll', onScroll, { passive: true });
-  }
-
   function loadAnalytics() {
     if (!/^G-[A-Z0-9]+$/i.test(GA_ID) || analyticsEnabled()) return;
 
@@ -134,6 +91,9 @@
   const status = document.getElementById('form-status');
 
   if (form) {
+    const startedAt = form.querySelector('input[name="started_at"]');
+    if (startedAt) startedAt.value = String(Date.now());
+
     form.addEventListener('submit', async (event) => {
       event.preventDefault();
       status.textContent = 'Calling Tuna…';
@@ -142,39 +102,29 @@
 
       try {
         const formData = new FormData(form);
-        if (formData.get('_honey')) {
-          form.reset();
-          status.textContent = status.dataset.success || 'Tuna called. A human will reply. His Lordship has been informed.';
-          return;
-        }
-
-        const payload = Object.fromEntries(formData.entries());
         const response = await fetch(form.action, {
           method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-          },
-          body: JSON.stringify(payload)
+          headers: { 'Accept': 'application/json' },
+          body: formData
         });
         const data = await response.json().catch(() => ({}));
-        if (!response.ok || data.success === 'false' || data.success === false) {
+        if (!response.ok || data.ok !== true) {
           throw new Error(data.message || data.error || 'Request failed');
         }
 
         form.reset();
+        if (startedAt) startedAt.value = String(Date.now());
         status.textContent = status.dataset.success || 'Tuna called. A human will reply. His Lordship has been informed.';
         if (analyticsEnabled() && typeof window.gtag === 'function') {
           window.gtag('event', 'call_tuna_submit', { page_path: location.pathname });
         }
       } catch (error) {
-        status.textContent = 'The tuna line is temporarily unavailable. Try email or Telegram.';
+        status.textContent = status.dataset.error || 'The tuna line is temporarily unavailable. Try email or Telegram.';
       } finally {
         button.disabled = false;
       }
     });
   }
 
-  setupHeroTuna();
   createConsentBanner();
 })();
