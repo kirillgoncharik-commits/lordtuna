@@ -49,5 +49,18 @@ The homepage must stay within roughly **5–6 screens** on desktop.
 
 ## Analytics
 
-**Do not replace the existing production Google Analytics property.**
-The current live GA measurement ID must be recovered from the legacy production site before launch and reused unchanged.
+The legacy production Google Analytics property was recovered and is reused unchanged:
+
+- Measurement ID: `G-3T9E1F0K1L`
+- Analytics loads only after consent.
+- Tracked interactions: project views, language switches, email, Telegram and confirmed contact-form delivery.
+
+## Contact delivery
+
+The public form posts to `/api/contact`. The Pages Function sends through Resend and reports success only after Resend accepts the email.
+
+Required production or preview environment variables:
+
+- `RESEND_API_KEY`
+- `CONTACT_FROM` — a verified Resend sender
+- `CONTACT_TO` — optional; defaults to `kirill.goncharik@gmail.com`

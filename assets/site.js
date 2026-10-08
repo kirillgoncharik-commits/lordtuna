@@ -1,57 +1,87 @@
 (() => {
   const GA_ID = document.querySelector('meta[name="ga-measurement-id"]')?.content || '';
   const CONSENT_KEY = 'lt_analytics_consent';
+  const ATTRIBUTION_KEY = 'lt_attribution_v1';
+  const UTM_KEYS = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term'];
+
+  function pageContext() {
+    const path = location.pathname;
+    const requestedDirection = new URLSearchParams(location.search).get('intent');
+    return {
+      page_path: path,
+      page_language: document.documentElement.lang || 'en',
+      problem_direction: requestedDirection === 'professional_website' || path.includes('/professional-websites/') ? 'professional_website' : 'website_development'
+    };
+  }
+
+  function currentTouch() {
+    const params = new URLSearchParams(location.search);
+    const touch = {
+      landing_page: location.pathname,
+      referrer: document.referrer || '',
+      timestamp: new Date().toISOString()
+    };
+    UTM_KEYS.forEach((key) => {
+      const value = params.get(key);
+      if (value) touch[key] = value.slice(0, 180);
+    });
+    return touch;
+  }
+
+  function readAttribution() {
+    try {
+      return JSON.parse(localStorage.getItem(ATTRIBUTION_KEY) || 'null') || {};
+    } catch (_) {
+      return {};
+    }
+  }
+
+  function persistAttribution() {
+    const stored = readAttribution();
+    const touch = currentTouch();
+    let hasExternalReferrer = false;
+    try {
+      hasExternalReferrer = Boolean(touch.referrer) && new URL(touch.referrer).origin !== location.origin;
+    } catch (_) {
+      hasExternalReferrer = false;
+    }
+    const hasCampaign = UTM_KEYS.some((key) => touch[key]) || hasExternalReferrer;
+    const attribution = {
+      first: stored.first || touch,
+      latest: hasCampaign ? touch : (stored.latest || touch)
+    };
+    try {
+      localStorage.setItem(ATTRIBUTION_KEY, JSON.stringify(attribution));
+    } catch (_) {
+      // Analytics still works when storage is unavailable.
+    }
+    return attribution;
+  }
+
+  function attributionParameters() {
+    const attribution = readAttribution();
+    return {
+      first_touch_source: attribution.first?.utm_source || undefined,
+      first_touch_content: attribution.first?.utm_content || undefined,
+      first_landing_page: attribution.first?.landing_page || undefined,
+      latest_touch_source: attribution.latest?.utm_source || undefined,
+      latest_touch_content: attribution.latest?.utm_content || undefined,
+      latest_landing_page: attribution.latest?.landing_page || undefined
+    };
+  }
+
+  function eventParameters(extra = {}) {
+    return { ...pageContext(), ...attributionParameters(), ...extra };
+  }
 
   function analyticsEnabled() {
     return window.lordTunaAnalyticsEnabled === true;
   }
 
-  function setupHeroTuna() {
-    const tuna = document.querySelector('[data-hero-tuna]');
-    if (!tuna) return;
-
-    const minimumVisibleMs = 2000;
-    const scrollThresholdPx = 24;
-    const startedAt = performance.now();
-    let lastScrollY = window.scrollY;
-    let totalScrollDistance = 0;
-    let dismissalScheduled = false;
-    let dismissed = false;
-
-    function dismiss() {
-      if (dismissed) return;
-      dismissed = true;
-      tuna.classList.add('is-leaving');
-      window.removeEventListener('scroll', onScroll);
-      window.setTimeout(() => tuna.classList.add('is-hidden'), 420);
-    }
-
-    function scheduleDismissal() {
-      if (dismissalScheduled || dismissed) return;
-      dismissalScheduled = true;
-      const remaining = minimumVisibleMs - (performance.now() - startedAt);
-      if (remaining <= 0) {
-        dismiss();
-      } else {
-        window.setTimeout(dismiss, remaining);
-      }
-    }
-
-    function onScroll() {
-      const currentScrollY = window.scrollY;
-      totalScrollDistance += Math.abs(currentScrollY - lastScrollY);
-      lastScrollY = currentScrollY;
-      if (totalScrollDistance < scrollThresholdPx) return;
-      window.removeEventListener('scroll', onScroll);
-      scheduleDismissal();
-    }
-
-    window.addEventListener('scroll', onScroll, { passive: true });
-  }
-
   function loadAnalytics() {
     if (!/^G-[A-Z0-9]+$/i.test(GA_ID) || analyticsEnabled()) return;
 
+    persistAttribution();
     window.dataLayer = window.dataLayer || [];
     window.gtag = window.gtag || function(){ window.dataLayer.push(arguments); };
     window.gtag('js', new Date());
@@ -110,11 +140,10 @@
   document.querySelectorAll('[data-analytics]').forEach((el) => {
     el.addEventListener('click', () => {
       if (analyticsEnabled() && typeof window.gtag === 'function') {
-        window.gtag('event', el.dataset.analytics, {
+        window.gtag('event', el.dataset.analytics, eventParameters({
           link_url: el.href,
-          project: el.dataset.project || undefined,
-          page_path: location.pathname
-        });
+          project: el.dataset.project || undefined
+        }));
       }
     });
   });
@@ -122,10 +151,9 @@
   document.querySelectorAll('.lang-menu a').forEach((el) => {
     el.addEventListener('click', () => {
       if (analyticsEnabled() && typeof window.gtag === 'function') {
-        window.gtag('event', 'language_switch', {
-          destination: el.getAttribute('href'),
-          page_path: location.pathname
-        });
+        window.gtag('event', 'language_switch', eventParameters({
+          destination: el.getAttribute('href')
+        }));
       }
     });
   });
@@ -134,6 +162,9 @@
   const status = document.getElementById('form-status');
 
   if (form) {
+    const startedAt = form.querySelector('input[name="started_at"]');
+    if (startedAt) startedAt.value = String(Date.now());
+
     form.addEventListener('submit', async (event) => {
       event.preventDefault();
       status.textContent = 'Calling Tuna…';
@@ -142,39 +173,37 @@
 
       try {
         const formData = new FormData(form);
-        if (formData.get('_honey')) {
-          form.reset();
-          status.textContent = status.dataset.success || 'Tuna called. A human will reply. His Lordship has been informed.';
-          return;
+        const context = pageContext();
+        const messageLength = String(formData.get('message') || '').trim().length;
+        const messageDepth = messageLength >= 300 ? 'detailed' : messageLength >= 120 ? 'medium' : 'short';
+        formData.set('source_page', context.page_path);
+        formData.set('lead_category', context.problem_direction);
+        if (analyticsEnabled()) {
+          formData.set('attribution', JSON.stringify(readAttribution()));
         }
-
-        const payload = Object.fromEntries(formData.entries());
         const response = await fetch(form.action, {
           method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-          },
-          body: JSON.stringify(payload)
+          headers: { 'Accept': 'application/json' },
+          body: formData
         });
         const data = await response.json().catch(() => ({}));
-        if (!response.ok || data.success === 'false' || data.success === false) {
+        if (!response.ok || data.ok !== true) {
           throw new Error(data.message || data.error || 'Request failed');
         }
 
         form.reset();
+        if (startedAt) startedAt.value = String(Date.now());
         status.textContent = status.dataset.success || 'Tuna called. A human will reply. His Lordship has been informed.';
         if (analyticsEnabled() && typeof window.gtag === 'function') {
-          window.gtag('event', 'call_tuna_submit', { page_path: location.pathname });
+          window.gtag('event', 'call_tuna_submit', eventParameters({ message_depth: messageDepth }));
         }
       } catch (error) {
-        status.textContent = 'The tuna line is temporarily unavailable. Try email or Telegram.';
+        status.textContent = status.dataset.error || 'The tuna line is temporarily unavailable. Try email or Telegram.';
       } finally {
         button.disabled = false;
       }
     });
   }
 
-  setupHeroTuna();
   createConsentBanner();
 })();
