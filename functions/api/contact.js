@@ -1,34 +1,61 @@
 export async function onRequestPost({ request, env }) {
   try {
-    const form = await request.formData();
-
-    // Honeypot.
-    if (form.get('website')) {
-      return Response.json({ ok: true });
+    const contentType = request.headers.get('content-type') || '';
+    let fields;
+    if (contentType.includes('application/json')) {
+      fields = await request.json();
+    } else {
+      fields = Object.fromEntries((await request.formData()).entries());
     }
 
-    const name = String(form.get('name') || '').trim();
-    const contact = String(form.get('contact') || '').trim();
-    const message = String(form.get('message') || '').trim();
+    const json = (body, status = 200) => Response.json(body, {
+      status,
+      headers: { 'Cache-Control': 'no-store' }
+    });
+
+    // Honeypot.
+    if (fields.website || fields._honey) {
+      return json({ ok: true });
+    }
+
+    const name = String(fields.name || '').trim();
+    const contact = String(fields.contact || '').trim();
+    const message = String(fields.message || '').trim();
+    const sourcePage = String(fields.source_page || '').trim();
+    const requestedCategory = String(fields.lead_category || '').trim();
+    const attribution = String(fields.attribution || '').trim();
+    const allowedCategories = new Set(['website_development', 'professional_website', 'other_unqualified']);
+    const leadCategory = allowedCategories.has(requestedCategory) ? requestedCategory : 'other_unqualified';
+    const startedAt = Number(fields.started_at || 0);
+    const elapsed = Date.now() - startedAt;
 
     if (!name || !contact || !message) {
-      return Response.json({ error: 'Missing required fields' }, { status: 400 });
+      return json({ ok: false, error: 'Missing required fields' }, 400);
+    }
+
+    if (name.length > 120 || contact.length > 180 || message.length > 5000 || sourcePage.length > 300 || attribution.length > 2000) {
+      return json({ ok: false, error: 'Field is too long' }, 400);
+    }
+
+    if (!startedAt || elapsed < 1800 || elapsed > 86_400_000) {
+      return json({ ok: false, error: 'Please reload the page and try again' }, 400);
     }
 
     if (!env.RESEND_API_KEY || !env.CONTACT_FROM) {
-      return Response.json(
-        { error: 'Contact delivery is not configured yet' },
-        { status: 503 }
-      );
+      return json({ ok: false, error: 'Contact delivery is not configured yet' }, 503);
     }
 
     const to = env.CONTACT_TO || 'kirill.goncharik@gmail.com';
-    const subject = `Call Tuna — ${name}`;
+    const safeName = name.replace(/[\r\n\t]+/g, ' ');
+    const subject = `Call Tuna — ${safeName}`;
     const text = [
       'New Lord Tuna enquiry',
       '',
       `Name: ${name}`,
       `Contact: ${contact}`,
+      `Source page: ${sourcePage || 'unknown'}`,
+      `Lead category: ${leadCategory}`,
+      `Attribution: ${attribution || 'not available or analytics not consented'}`,
       '',
       message,
       '',
@@ -52,12 +79,16 @@ export async function onRequestPost({ request, env }) {
     if (!resend.ok) {
       const detail = await resend.text();
       console.error('Resend error:', detail);
-      return Response.json({ error: 'Delivery failed' }, { status: 502 });
+      return json({ ok: false, error: 'Delivery failed' }, 502);
     }
 
-    return Response.json({ ok: true });
+    const delivery = await resend.json().catch(() => ({}));
+    return json({ ok: true, id: delivery.id || undefined });
   } catch (error) {
     console.error(error);
-    return Response.json({ error: 'Unexpected error' }, { status: 500 });
+    return Response.json({ ok: false, error: 'Unexpected error' }, {
+      status: 500,
+      headers: { 'Cache-Control': 'no-store' }
+    });
   }
 }
