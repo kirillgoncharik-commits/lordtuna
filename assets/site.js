@@ -140,8 +140,14 @@
   document.querySelectorAll('[data-analytics]').forEach((el) => {
     el.addEventListener('click', () => {
       if (analyticsEnabled() && typeof window.gtag === 'function') {
-        window.gtag('event', el.dataset.analytics, eventParameters({
-          link_url: el.href,
+        const eventName = el.dataset.analytics === 'email_click'
+          ? 'click_email'
+          : el.dataset.analytics === 'telegram_click'
+            ? 'click_messenger'
+            : el.dataset.analytics;
+        window.gtag('event', eventName, eventParameters({
+          link_domain: el.hostname || undefined,
+          messenger: eventName === 'click_messenger' ? 'telegram' : undefined,
           project: el.dataset.project || undefined
         }));
       }
@@ -195,7 +201,9 @@
         if (startedAt) startedAt.value = String(Date.now());
         status.textContent = status.dataset.success || 'Tuna called. A human will reply. His Lordship has been informed.';
         if (analyticsEnabled() && typeof window.gtag === 'function') {
-          window.gtag('event', 'call_tuna_submit', eventParameters({ message_depth: messageDepth }));
+          const parameters = eventParameters({ message_depth: messageDepth });
+          window.gtag('event', 'form_submit', parameters);
+          window.gtag('event', 'generate_lead', { ...parameters, lead_source: 'contact_form' });
         }
       } catch (error) {
         status.textContent = status.dataset.error || 'The tuna line is temporarily unavailable. Try email or Telegram.';
