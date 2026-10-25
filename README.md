@@ -1,10 +1,10 @@
 # Lord Tuna
 
-Boutique landing-page studio.
+Practical AI automation and commercial research for small B2B teams.
 
-**We build focused websites.**
+**AI automation for marketing, research and business hypothesis validation.**
 
-Lord Tuna works with businesses, products and launches. The process starts with understanding the business, defining its language and the language of its audience, shaping the offer, writing the story, defining art direction, building, preparing and launching the page.
+Lord Tuna implements focused workflows for marketing operations, market and competitor research, B2B opportunity research, hypothesis validation and recurring reporting. Every project begins with a concrete task, agreed sources, explicit human review and a documented handover.
 
 ## Brand direction
 
@@ -12,23 +12,24 @@ Lord Tuna works with businesses, products and launches. The process starts with 
 
 Serious work. Slightly unserious name.
 
-## Product
+## Services
 
-- Landing pages
-- Product / launch pages
-- Compact business websites
-- Professional sites
+- AI marketing automation
+- AI-assisted market and competitor research
+- B2B lead and opportunity research automation
+- AI-assisted business hypothesis validation
+- Marketing reporting automation
+- Compact landing pages and business websites, especially for hypothesis tests
 
 Not a fit for:
-- Large e-commerce
-- Marketplaces
-- Customer dashboards
-- Complex web apps
-- Large corporate websites
+- Voice bots, HR automation or accounting automation
+- Complex CRM transformations
+- Fully autonomous decision-making or unsupervised public communication
+- Guaranteed lead, sales or ranking promises
 
 ## Current homepage rule
 
-The homepage must stay within roughly **5–6 screens** on desktop.
+The homepage keeps the existing six-part editorial composition: offer, work, services, process, scope/FAQ and contact.
 
 ## Languages
 

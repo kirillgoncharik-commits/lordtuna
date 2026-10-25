@@ -47,6 +47,14 @@ assert.equal(response.status, 200);
 response = await onRequestPost({ request: request({ ...valid(), started_at: Date.now() }), env });
 assert.equal(response.status, 400);
 
+response = await onRequestPost({ request: request({ ...valid(), lead_category: 'market_research' }), env });
+assert.equal(response.status, 200);
+assert.match(deliveredPayload.text, /Lead category: market_research/);
+
+response = await onRequestPost({ request: request({ ...valid(), lead_category: 'not_allowed' }), env });
+assert.equal(response.status, 200);
+assert.match(deliveredPayload.text, /Lead category: other_unqualified/);
+
 response = await onRequestPost({ request: request(valid()), env: {} });
 assert.equal(response.status, 503);
 

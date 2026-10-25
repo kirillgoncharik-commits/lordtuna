@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://lordtuna.com/</loc></url>
-  <url><loc>https://lordtuna.com/ru/</loc></url>
-  <url><loc>https://lordtuna.com/no/</loc></url>
-  <url><loc>https://lordtuna.com/da/</loc></url>
-  <url><loc>https://lordtuna.com/es/</loc></url>
-  <url><loc>https://lordtuna.com/ja/</loc></url>
-  <url><loc>https://lordtuna.com/tpi/</loc></url>
+  <url><loc>https://lordtuna.com/</loc><lastmod>2026-10-25</lastmod></url>
+  <url><loc>https://lordtuna.com/ru/</loc><lastmod>2026-10-25</lastmod></url>
+  <url><loc>https://lordtuna.com/no/</loc><lastmod>2026-10-25</lastmod></url>
+  <url><loc>https://lordtuna.com/da/</loc><lastmod>2026-10-25</lastmod></url>
+  <url><loc>https://lordtuna.com/es/</loc><lastmod>2026-10-25</lastmod></url>
+  <url><loc>https://lordtuna.com/ja/</loc><lastmod>2026-10-25</lastmod></url>
+  <url><loc>https://lordtuna.com/tpi/</loc><lastmod>2026-10-25</lastmod></url>
   <url><loc>https://lordtuna.com/work/kujo-video/</loc></url>
   <url><loc>https://lordtuna.com/work/merch-mt/</loc></url>
   <url><loc>https://lordtuna.com/work/goncharik-pro/</loc></url>
@@ -17,5 +17,5 @@
   <url><loc>https://lordtuna.com/landing-page-design/</loc><lastmod>2026-10-08</lastmod></url>
   <url><loc>https://lordtuna.com/professional-websites/</loc><lastmod>2026-10-08</lastmod></url>
   <url><loc>https://lordtuna.com/event-landing-pages/</loc><lastmod>2026-10-08</lastmod></url>
-  <url><loc>https://lordtuna.com/ru/professional-websites/</loc><lastmod>2026-10-08</lastmod></url>
+  <url><loc>https://lordtuna.com/ru/professional-websites/</loc><lastmod>2026-10-25</lastmod></url>
 </urlset>
