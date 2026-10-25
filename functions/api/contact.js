@@ -24,7 +24,17 @@ export async function onRequestPost({ request, env }) {
     const sourcePage = String(fields.source_page || '').trim();
     const requestedCategory = String(fields.lead_category || '').trim();
     const attribution = String(fields.attribution || '').trim();
-    const allowedCategories = new Set(['website_development', 'professional_website', 'other_unqualified']);
+    const allowedCategories = new Set([
+      'ai_marketing_automation',
+      'market_research',
+      'b2b_lead_research',
+      'hypothesis_validation',
+      'reporting_automation',
+      'website_development',
+      'professional_website',
+      'automation_research',
+      'other_unqualified'
+    ]);
     const leadCategory = allowedCategories.has(requestedCategory) ? requestedCategory : 'other_unqualified';
     const startedAt = Number(fields.started_at || 0);
     const elapsed = Date.now() - startedAt;

@@ -3,14 +3,31 @@
   const CONSENT_KEY = 'lt_analytics_consent';
   const ATTRIBUTION_KEY = 'lt_attribution_v1';
   const UTM_KEYS = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term'];
+  const LEAD_CATEGORIES = new Set([
+    'ai_marketing_automation',
+    'market_research',
+    'b2b_lead_research',
+    'hypothesis_validation',
+    'reporting_automation',
+    'website_development',
+    'professional_website'
+  ]);
 
   function pageContext() {
     const path = location.pathname;
     const requestedDirection = new URLSearchParams(location.search).get('intent');
+    let problemDirection = 'automation_research';
+    if (requestedDirection && LEAD_CATEGORIES.has(requestedDirection)) {
+      problemDirection = requestedDirection;
+    } else if (path.includes('/professional-websites/')) {
+      problemDirection = 'professional_website';
+    } else if (path.includes('/landing-page-design/') || path.includes('/event-landing-pages/')) {
+      problemDirection = 'website_development';
+    }
     return {
       page_path: path,
       page_language: document.documentElement.lang || 'en',
-      problem_direction: requestedDirection === 'professional_website' || path.includes('/professional-websites/') ? 'professional_website' : 'website_development'
+      problem_direction: problemDirection
     };
   }
 
@@ -110,16 +127,26 @@
     }
     if (existing === 'denied') return;
 
+    const language = document.documentElement.lang || 'en';
+    const copy = {
+      ru: ['Аналитика, не слежка.', 'Используем простую аналитику, чтобы понимать, чем люди действительно пользуются.', 'Нет, спасибо', 'Разрешить'],
+      no: ['Analyse, ikke overvåking.', 'Vi bruker enkel analyse for å se hva folk faktisk bruker.', 'Nei takk', 'Tillat analyse'],
+      da: ['Analyse, ikke overvågning.', 'Vi bruger enkel analyse til at se, hvad folk faktisk bruger.', 'Nej tak', 'Tillad analyse'],
+      es: ['Analítica, no vigilancia.', 'Usamos analítica sencilla para saber qué utiliza realmente la gente.', 'No, gracias', 'Permitir analítica'],
+      ja: ['監視ではなく、分析です。', '実際に使われている内容を知るために、シンプルなアクセス解析を利用します。', '許可しない', '分析を許可'],
+      tpi: ['Analytics, i no pasin bilong was.', 'Mipela i yusim isi analytics long lukim wanem samting ol manmeri i yusim tru.', 'Nogat tenkyu', 'Larim analytics']
+    }[language] || ['Analytics, not surveillance.', 'We use simple analytics to see what people actually use.', 'No thanks', 'Allow analytics'];
+
     const banner = document.createElement('div');
     banner.className = 'consent-banner';
     banner.innerHTML = `
       <div>
-        <strong>Analytics, not surveillance.</strong>
-        <span>We use simple analytics to see what people actually use.</span>
+        <strong>${copy[0]}</strong>
+        <span>${copy[1]}</span>
       </div>
       <div class="consent-actions">
-        <button type="button" data-consent="deny">No thanks</button>
-        <button type="button" data-consent="allow">Allow analytics</button>
+        <button type="button" data-consent="deny">${copy[2]}</button>
+        <button type="button" data-consent="allow">${copy[3]}</button>
       </div>`;
 
     document.body.appendChild(banner);
@@ -180,10 +207,11 @@
       try {
         const formData = new FormData(form);
         const context = pageContext();
+        const selectedService = String(formData.get('service') || '').trim();
         const messageLength = String(formData.get('message') || '').trim().length;
         const messageDepth = messageLength >= 300 ? 'detailed' : messageLength >= 120 ? 'medium' : 'short';
         formData.set('source_page', context.page_path);
-        formData.set('lead_category', context.problem_direction);
+        formData.set('lead_category', LEAD_CATEGORIES.has(selectedService) ? selectedService : context.problem_direction);
         if (analyticsEnabled()) {
           formData.set('attribution', JSON.stringify(readAttribution()));
         }
@@ -201,7 +229,10 @@
         if (startedAt) startedAt.value = String(Date.now());
         status.textContent = status.dataset.success || 'Tuna called. A human will reply. His Lordship has been informed.';
         if (analyticsEnabled() && typeof window.gtag === 'function') {
-          const parameters = eventParameters({ message_depth: messageDepth });
+          const parameters = eventParameters({
+            message_depth: messageDepth,
+            service_interest: LEAD_CATEGORIES.has(selectedService) ? selectedService : context.problem_direction
+          });
           window.gtag('event', 'form_submit', parameters);
           window.gtag('event', 'generate_lead', { ...parameters, lead_source: 'contact_form' });
         }

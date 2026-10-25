@@ -1,249 +1,113 @@
-# Lord Tuna v2 — Website Spec
+# Lord Tuna — Website Spec
 
 ## 1. Positioning
 
 ### Core proposition
-**We build focused websites.**
 
-Landing pages for businesses, products and launches.
+**AI automation for marketing, research and business hypothesis validation.**
 
-We understand the business first. We define its language and the language of its audience. Then we shape the offer, write the story, design the page and ship it.
+Lord Tuna implements focused AI workflows for small B2B companies, agencies, studios and expert businesses. The work connects AI to a concrete business task: finding and assessing commercial opportunities, researching markets and competitors, preparing test landing pages, or producing recurring marketing reports.
 
-### Brand lines
-- Small websites. Serious business.
-- Serious work. Slightly unserious name.
-- We don't specialize in industries. We specialize in figuring out what you're selling — and how your audience talks about it.
-- The expensive part isn't the code.
+Guardrails:
 
-## 2. Art direction
+- no autonomous-business claims;
+- no guaranteed leads, sales, rankings or commercial outcomes;
+- human review and decision ownership remain explicit;
+- new scenarios are examples until verified client results exist.
+
+Russian is the primary commercial language. Every existing localization remains available and conveys the same offer in natural local wording.
+
+## 2. Services
+
+1. **AI marketing automation** — enquiry processing, routing, notifications, reply drafts and recurring summaries. Workflow and integrations are defined before implementation.
+2. **AI-assisted market and competitor research** — structured evidence about markets, competitors, offers and pricing, with sources and decision-ready conclusions.
+3. **B2B lead and opportunity research automation** — monitoring agreed sources, deduplication, qualification and a personalized first-message draft for human review.
+4. **AI-assisted business hypothesis validation** — audience and competitor research, offer formulation, a compact test landing page and response measurement.
+5. **Marketing reporting automation** — data collection, recurring summaries, anomaly notifications and a prioritized action list.
+
+Compact landing pages and business websites remain a secondary service, particularly when a hypothesis needs a real test page. Positioning, copy, responsive development, technical SEO preparation and analytics may be included.
+
+Excluded from the offer: voice bots, HR automation, accounting, complex CRM transformations and unrelated automation categories.
+
+## 3. Art direction
 
 **85% Editorial Lord / 15% Corporate Absurdism**
 
 Rules:
-1. The joke is never the product.
-2. One weird thing at a time.
-3. When visuals are funny, copy stays serious.
-4. When copy is funny, layout stays serious.
-5. Lord Tuna never acts excited.
 
-Visual system:
-- Paper: #F2EEE6
-- Ink: #161616
-- Muted: #68645E
-- Tuna Red: #A74235
-- Display: Newsreader
-- UI/body: IBM Plex Sans
-- Labels: IBM Plex Mono
-
-No ocean aesthetic, no nautical motifs, no cartoon fish.
-
-## 3. Homepage constraint
-
-Homepage must fit in approximately **5–6 viewport screens** on desktop.
-
-If the homepage needs more than six screens to explain the offer, the offer is not clear enough.
+1. Preserve the existing paper, ink, muted and Tuna Red palette.
+2. Preserve Newsreader, IBM Plex Sans and IBM Plex Mono.
+3. Keep the existing logo, tuna engraving, components and editorial composition.
+4. The joke is never the product.
+5. One weird thing at a time.
+6. Do not introduce a new visual concept or generic AI imagery.
 
 ## 4. Homepage structure
 
-### Screen 1 — Hero
+The homepage remains within roughly six editorial sections on desktop.
 
-**We build focused websites.**
+1. **Hero** — AI automation for marketing, research and hypothesis testing; primary CTA asks to discuss a specific task.
+2. **Selected work** — existing sites shown only as positioning, copy, design and launch cases.
+3. **Services** — five AI/research directions plus a secondary link to compact websites and landing pages.
+4. **Process** — task → agreed scenario → implementation → verification → handover/support.
+5. **Scope and FAQ** — estimate after scoping, required access, third-party costs, handover, support and no outcome guarantees.
+6. **Contact** — service selector, contact details and a task-oriented message prompt.
 
-Landing pages for businesses, products and launches.
+## 5. Portfolio policy
 
-We understand the business first. We define its language and the language of its audience. Then we shape the offer, write the story, design the page and ship it.
+Preserve all existing portfolio routes and project cards. Do not present website projects as proof of automation, AI implementation or sales growth unless a verified result is added later. Clearly label unimplemented automation scenarios as examples.
 
-Primary CTA: **Start a project →**
-Secondary CTA: **See our work ↓**
+## 6. Pricing and scope
 
-Micro:
-- SMALL WEBSITES / SERIOUS BUSINESS
-- Serious work. Slightly unserious name.
+Do not show the earlier website price as a price for automation. New work is estimated after the task, data sources, integrations, approval rules and support requirements are understood.
 
-No tuna illustration in hero.
+Third-party data, AI models, automation platforms, research panels, advertising and ongoing support are approved and priced separately.
 
-### Screen 2 — Selected work
+## 7. Languages
 
-Four project cards:
-1. Kujo Video — AI video / Entertainment
-2. merch.mt — B2B / Event merchandise
-3. Goncharik Pro — Consulting / Personal brand
-4. Petruseva.com — Psychology / Professional services
-
-Statement:
-**We don't specialize in industries. We specialize in figuring out what you're selling — and how your audience talks about it.**
-
-### Screen 3 — What we do
-
-**One business. One offer. One good page.**
-
-Three product groups:
-- Landing pages
-- Compact business websites
-- Launch pages
-
-Compact Tuna moment:
-**Lord Tuna believes most websites are too complicated.**
-We tend to agree.
-
-### Screen 4 — Tuna Flow
-
-**We start with the business. Not with the website.**
-
-1. UNDERSTAND — Business breakdown
-2. DEFINE — Business & audience language
-3. POSITION — Offer & positioning
-4. STRUCTURE — Wireframe
-5. WRITE — Copy
-6. DIRECT — Art direction
-7. BUILD — Design & development
-8. PREPARE — SEO, analytics & QA
-9. LAUNCH — Production
-
-Micro:
-*No 74-page discovery deck is produced during this process.*
-
-### Screen 5 — Price + scope
-
-**From €450.**
-
-Typical project: **€450–750**, depending on thinking, writing and design effort.
-
-Usually included:
-- Business breakdown
-- Business & audience language
-- Positioning
-- Page structure
-- Copywriting
-- Art direction
-- Responsive design
-- Development
-- Technical SEO basics
-- Analytics setup
-- Domain & launch
-- Two revision rounds
-
-**We like**
-Landing pages / product pages / service businesses / professional sites / campaign pages / launches / experiments.
-
-**Not really**
-Large e-commerce / marketplaces / dashboards / complex web apps / huge corporate websites / CMS architectures from hell / projects with seventeen decision makers.
-
-Value line:
-**The expensive part isn't the code.**
-
-### Screen 6 — Call Tuna
-
-Heading:
-**CALL TUNA**
-
-**Have a business. Need a page?**
-
-A messy idea is enough to start.
-
-Form fields:
-- Name
-- Email / Telegram
-- What are you building?
-
-Submit:
-**Call Tuna →**
-
-Alternatives:
-- Email: kirill.goncharik@gmail.com
-- Telegram: @thelordtuna
-
-Success state:
-**Tuna called.**
-Your message is on its way.
-*A human will reply. His Lordship has been informed.*
-
-Footer language line:
-English · Русский · Norsk · Español · 日本語 · Tok Pisin
-
-Language legend:
-**Why these languages? Because tuna travels.**
-
-Micro:
-*Languages selected using a highly scientific tuna-based methodology.*
-
-Footer:
-- Small websites. Serious business.
-- © 2026 Lord Tuna
-- No tuna were consulted in the making of this website.
-
-## 5. Language routes
-
-- / — English
-- /ru/ — Russian
-- /no/ — Norwegian
-- /es/ — Spanish
-- /ja/ — Japanese
-- /tpi/ — Tok Pisin
+- `/` — English
+- `/ru/` — Russian
+- `/no/` — Norwegian
+- `/da/` — Danish
+- `/es/` — Spanish
+- `/ja/` — Japanese
+- `/tpi/` — Tok Pisin
 
 Requirements:
-- localized title and meta description
-- canonical per locale
-- hreflang across all locale equivalents
-- x-default points to English
-- do not machine-translate blindly; localize tone while preserving dry humor
 
-## 6. Contact form
+- localized title, description, Open Graph text and page copy;
+- canonical per locale;
+- reciprocal hreflang across locale equivalents;
+- `x-default` points to English;
+- form and analytics-consent text are localized;
+- natural terminology rather than literal translation.
 
-The short “Call Tuna” form must deliver messages to:
+## 8. Contact and analytics
 
-**kirill.goncharik@gmail.com**
+The contact form posts to `/api/contact` and sends through the existing Resend integration.
 
-Telegram shortcut:
-**@thelordtuna**
+- Preserve measurement ID `G-3T9E1F0K1L`.
+- Preserve consent-gated analytics.
+- Preserve project views, language switches, email, Telegram and confirmed form-submission events.
+- Record the selected service as a lead category and analytics parameter without sending form contents to analytics.
 
-Spam protection should be lightweight and invisible where possible.
+## 9. SEO baseline
 
-## 7. Analytics
+- retain current useful URLs and service/case pages;
+- retain sitemap, robots, canonical and hreflang structure;
+- use a distinct search-intent cluster for each primary service;
+- avoid adding near-duplicate keyword pages without evidence;
+- keep technical SEO and analytics inside relevant landing-page work;
+- keep Google Ads and Meta as possible test inputs, not standalone primary services;
+- structured data must match visible content and make no unverified claims.
 
-Critical migration rule:
-- **reuse the current production Google Analytics property / measurement ID**
-- do not create a fresh property unless explicitly requested
-- add conversion events for:
-  - call_tuna_submit
-  - telegram_click
-  - email_click
-  - project_view
-  - language_switch
+## 10. Quality checks
 
-Current GA ID is still to be recovered from the legacy production code before production launch.
-
-## 8. SEO baseline
-
-- sitemap.xml
-- robots.txt
-- canonical
-- hreflang
-- Open Graph
-- Twitter cards
-- Organization / ProfessionalService structured data where appropriate
-- project/case-study structured content
-- fast page load
-- mobile-first
-- descriptive headings
-- no keyword stuffing
-
-## 9. Portfolio case routes
-
-Recommended:
-- /work/kujo-video/
-- /work/merch-mt/
-- /work/goncharik-pro/
-- /work/petruseva/
-
-Each case should explain:
-Business → Question → Language → Positioning → Structure → Work → Result.
-
-## 10. Non-goals
-
-Do not turn Lord Tuna into:
-- a full-service agency
-- a large-site development shop
-- an e-commerce studio
-- a generic “digital transformation” brand
-- a joke-first fish website
+- one H1 per indexable page;
+- unique title and canonical;
+- valid JSON-LD;
+- every local href/src target exists;
+- every canonical appears in the sitemap;
+- no horizontal overflow at small mobile and desktop widths;
+- contact categories accepted by the delivery endpoint;
+- JavaScript syntax, contact tests and repository validation pass.
