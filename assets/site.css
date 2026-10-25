@@ -24,6 +24,8 @@ footer{grid-column:1/-1;border-top:1px solid var(--line);padding-top:26px;displa
 .project>.arrow{grid-column:3;grid-row:1/3;align-self:start}
 .project-preview{grid-column:2;aspect-ratio:8/5;margin:0;border:1px solid rgba(22,22,22,.16);overflow:hidden;background:#d8d2c7}
 .project-preview img{width:100%;height:100%;display:block;object-fit:cover;object-position:top;transition:transform .35s ease}
+.project-preview-logo{background:#fff}
+.project-preview-logo img{box-sizing:border-box;object-fit:contain;object-position:center;padding:4%}
 .project:hover .project-preview img{transform:scale(1.015)}
 @media(max-width:900px){.project{grid-template-columns:auto 1fr auto}}
 
